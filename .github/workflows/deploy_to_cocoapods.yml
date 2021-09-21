@@ -19,7 +19,7 @@ jobs:
     - name: Deploy to Cocoapods
       run: |
         set -eo pipefail
-        pod lib lint WebRTC-SDK.podspec --allow-warnings
-        pod trunk push WebRTC-SDK.podspec --allow-warnings
+        pod spec lint --allow-warnings --skip-import-validation
+        pod trunk push --allow-warnings --skip-import-validation
       env:
         COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
