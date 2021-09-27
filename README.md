@@ -11,5 +11,5 @@ source 'https://github.com/webrtc-sdk/Specs.git'
 ```
 
 ```podspec
-pod 'WebRTC-SDK', '=92.4515.05'
+pod 'WebRTC-SDK', '=92.4515.06'
 ```
