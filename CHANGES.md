@@ -1,6 +1,14 @@
 # Changelog
 
 --------------------------------------------
+[92.4515.07] - 2021.09.30
+
+iOS(arm64,x64) macOS(x64, arm64).
+
+* Always restart AudioUnit when category changes.
+* Read defaults from AVAudioSession.
+
+--------------------------------------------
 [92.4515.06] - 2021.09.27
 
 iOS(arm64,x64) macOS(x64, arm64).
