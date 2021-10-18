@@ -1,6 +1,12 @@
 # Changelog
 
 --------------------------------------------
+[92.4515.10] - 2021.10.18
+
+iOS(arm64), iOS-Simulator(arm64,x64), macOS(arm64,x64).
+
+* Fix symbol link issue for macOS.
+
 [92.4515.09] - 2021.10.18
 
 iOS(arm64), iOS-Simulator(arm64,x64), macOS(arm64,x64).
