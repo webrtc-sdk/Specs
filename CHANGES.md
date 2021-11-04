@@ -1,6 +1,12 @@
 # Changelog
 
 --------------------------------------------
+[92.4515.11] - 2021.10.18
+
+iOS(arm64,armv7), iOS-Simulator(x64), macOS(arm64,x64).
+
+* Add armv7 for iOS device.
+
 [92.4515.10] - 2021.10.18
 
 iOS(arm64), iOS-Simulator(arm64,x64), macOS(arm64,x64).
