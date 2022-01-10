@@ -1,6 +1,10 @@
 # Changelog
 
 --------------------------------------------
+[93.4577.02] - 2022.01.10
+
+* feat: Support bypass voice processing for iOS.
+
 [93.4577.01] - 2021.12.29
 
 * Upgrade to WebRTC-SDK M93.4577.01
