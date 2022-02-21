@@ -1,6 +1,12 @@
 # Changelog
 
 --------------------------------------------
+[97.4692.02] - 2022.02.21
+
+* Fix broken release build
+
+Corresponds to https://github.com/webrtc-sdk/webrtc/commit/a4b072276937e49e62a473321103b0497ab21bca
+
 [97.4692.01] - 2022.02.21
 
 * Upgrade to WebRTC-SDK M97.4692.01
