@@ -8,7 +8,7 @@ let package = Package(
         .library(
             name: "WebRTC",
             targets: ["WebRTC"],
-            type: .dynamic,
+            type: .dynamic
         ),
     ],
     dependencies: [],
