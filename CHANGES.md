@@ -1,6 +1,12 @@
 # Changelog
 
 --------------------------------------------
+[97.4692.03] - 2022.05.10
+
+* Added `shouldReceive` property to `RTCVideoTrack`
+
+Corresponds to https://github.com/webrtc-sdk/webrtc/commit/415fbe5e175b7f5815d497c7563eb03ee6687fbe
+
 [97.4692.02] - 2022.02.21
 
 * Fix broken release build
