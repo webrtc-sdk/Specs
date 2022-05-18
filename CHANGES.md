@@ -2,12 +2,17 @@
 
 --------------------------------------------
 
+[97.4692.05] - 2022.05.14
+
+* Add RTCYUVHelper for darwin.
+
+Corresponds to https://github.com/webrtc-sdk/webrtc/commit/59fde2a30cf5c409a1b5ef193f6e37392a02e1df
+
 [97.4692.04] - 2022.05.14
 
 * Fix crash related to VideoRTPReceiver
 
 Corresponds to https://github.com/webrtc-sdk/webrtc/commit/da9f0586fcd4442071e3a7a6c36915599ce0f29a
-
 
 [97.4692.03] - 2022.05.10
 
