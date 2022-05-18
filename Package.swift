@@ -14,7 +14,7 @@ let package = Package(
         .binaryTarget(
             name: "WebRTC",
             url: "https://github.com/webrtc-sdk/Specs/releases/download/97.4692.05/WebRTC.xcframework.zip",
-            checksum: "4bdc11be9de8c08aa85c3a0c2f8c3259021fa1556bc270916a329c6a4b84155d"
+            checksum: "434c8be57892e9f4dbe8fa7afe188d2dd1ad31d15ad7887d4f5ba4bba7f476c3"
         ),
     ]
 )
