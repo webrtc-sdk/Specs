@@ -1,8 +1,12 @@
 # Changelog
 
 --------------------------------------------
+[97.4692.06] - 2022.06.16
 
-[97.4692.05] - 2022.05.14
+* [Mac] feat: Support screen capture for macOS.
+* [Mac] Allow audio device selection.
+
+[97.4692.06] - 2022.05.14
 
 * Add RTCYUVHelper for darwin.
 
