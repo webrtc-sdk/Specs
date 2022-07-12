@@ -1,12 +1,15 @@
 # Changelog
 
 --------------------------------------------
+[97.4692.07] - 2022.07.12
+
+* [Mac] Add event listener for screen sharing.
+
 [97.4692.06] - 2022.06.16
 
 * [Mac] feat: Support screen capture for macOS.
-* [Mac] Allow audio device selection.
 
-[97.4692.06] - 2022.05.14
+[97.4692.05] - 2022.05.14
 
 * Add RTCYUVHelper for darwin.
 
