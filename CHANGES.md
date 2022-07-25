@@ -6,6 +6,8 @@
 * Upgrade to WebRTC-SDK M104.5112.01
 * **32-bit ARM platform has been removed.**
 
+Corresponds to https://github.com/webrtc-sdk/webrtc/commit/a828846eb98e404bf3b00c1abf3787f93171a39c
+
 --------------------------------------------
 [97.4692.07] - 2022.07.12
 
