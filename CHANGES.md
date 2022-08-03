@@ -1,5 +1,13 @@
 # Changelog
+
 --------------------------------------------
+[104.5112.02] - 2022.08.03
+
+* Upgrade to WebRTC-SDK M104.5112.02
+* [Mac] feat: Support screen capture for macOS.
+* [Mac] Allow audio device selection.
+
+Corresponds to https://github.com/webrtc-sdk/webrtc/commit/a828846eb98e404bf3b00c1abf3787f93171a39c
 
 [104.5112.01] - 2022.07.12
 
