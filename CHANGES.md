@@ -1,6 +1,11 @@
 # Changelog
 
 --------------------------------------------
+[104.5112.03] - 2022.08.10
+
+* Upgrade to WebRTC-SDK M104.5112.03
+* [Mac] fix: Get thumbnails asynchronously.
+
 [104.5112.02] - 2022.08.03
 
 * Upgrade to WebRTC-SDK M104.5112.02
