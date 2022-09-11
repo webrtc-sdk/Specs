@@ -1,9 +1,14 @@
 # Changelog
 
 --------------------------------------------
-[104.5112.03] - 2022.08.10
+[104.5112.04] - 2022.09.11
 
-* Upgrade to WebRTC-SDK M104.5112.03
+* Upgrade to WebRTC-SDK M104.5112.04
+* Cross-platform `RTCMTLVideoView` for both iOS / macOS (#40)
+
+[104.5112.04] - 2022.08.10
+
+* Upgrade to WebRTC-SDK M104.5112.04
 * [Mac] fix: Get thumbnails asynchronously.
 
 [104.5112.02] - 2022.08.03
