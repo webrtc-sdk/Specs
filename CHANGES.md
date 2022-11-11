@@ -1,6 +1,11 @@
 # Changelog
 
 --------------------------------------------
+[104.5112.06] - 2022.11.11
+
+* Upgrade to WebRTC-SDK M104.5112.06
+* [iOS] fix: Restarting the playout without audio send streams makes the mic indicator off.
+
 [104.5112.05] - 2022.10.17
 
 * Upgrade to WebRTC-SDK M104.5112.05
