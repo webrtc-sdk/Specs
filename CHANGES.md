@@ -1,6 +1,11 @@
 # Changelog
 
 --------------------------------------------
+[104.5112.07] - 2022.11.11
+
+* Upgrade to WebRTC-SDK M104.5112.07
+* [iOS] AudioUnit: Don't rely on category switch for mic indicator to turn off.
+
 [104.5112.06] - 2022.11.11
 
 * Upgrade to WebRTC-SDK M104.5112.06
