@@ -1,6 +1,11 @@
 # Changelog
 
 --------------------------------------------
+[104.5112.08] - 2023.01.04
+
+* Upgrade to WebRTC-SDK M104.5112.08
+* [iOS] Stop recording on mute (turn off mic indicator).
+
 [104.5112.07] - 2022.11.11
 
 * Upgrade to WebRTC-SDK M104.5112.07
