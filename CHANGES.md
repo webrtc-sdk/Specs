@@ -1,6 +1,11 @@
 # Changelog
 
 --------------------------------------------
+[104.5112.09] - 2023.01.31
+
+* Upgrade to WebRTC-SDK M104.5112.09
+* [ObjC] Expose properties / methods required for AV1 codec support.
+
 [104.5112.08] - 2023.01.04
 
 * Upgrade to WebRTC-SDK M104.5112.08
