@@ -1,6 +1,11 @@
 # Changelog
 
 --------------------------------------------
+[104.5112.10] - 2023.02.02
+
+* Upgrade to WebRTC-SDK M104.5112.10
+* Support frame encryption.
+
 [104.5112.09] - 2023.01.31
 
 * Upgrade to WebRTC-SDK M104.5112.09
