@@ -1,6 +1,12 @@
 # Changelog
 
 --------------------------------------------
+[104.5112.11] - 2023.02.13
+
+* Upgrade to WebRTC-SDK M104.5112.11
+* Fixed macOS desktop capture crash with simulcast enabled.
+* Fix the crash when setting the fps of the virtual camera.
+
 [104.5112.10] - 2023.02.02
 
 * Upgrade to WebRTC-SDK M104.5112.10
