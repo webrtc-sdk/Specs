@@ -1,6 +1,11 @@
 # Changelog
 
 --------------------------------------------
+[104.5112.12] - 2023.03.07
+
+* Upgrade to WebRTC-SDK M104.5112.12
+* fix: Fix memory leak for screen capture on macOS. (#64)
+
 [104.5112.11] - 2023.02.13
 
 * Upgrade to WebRTC-SDK M104.5112.11
