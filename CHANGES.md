@@ -1,6 +1,11 @@
 # Changelog
 
 --------------------------------------------
+[104.5112.16] - 2023.04.25
+
+* Upgrade to WebRTC-SDK M104.5112.16
+* rename KeyManager to KeyProvider.
+
 [104.5112.15] - 2023.04.24
 
 * Upgrade to WebRTC-SDK M104.5112.15
