@@ -1,6 +1,11 @@
 # Changelog
 
 --------------------------------------------
+[104.5112.17] - 2023.05.22
+
+* Upgrade to WebRTC-SDK M104.5112.17
+* Improve iOS/macOS H264 encoder.
+
 [104.5112.16] - 2023.04.25
 
 * Upgrade to WebRTC-SDK M104.5112.16
