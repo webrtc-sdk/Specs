@@ -1,6 +1,12 @@
 # Changelog
 
 --------------------------------------------
+[114.5735.02] - 2023.07.13
+
+* Upgrade to WebRTC-SDK M114.5735.02
+* fix: skip decryption when key invalid.
+* Simplify output / input audio device setting and getting through properties.
+
 [114.5735.01] - 2023.06.27
 
 * Upgrade to WebRTC-SDK M114.5735.01
