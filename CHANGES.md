@@ -1,6 +1,10 @@
 # Changelog
 
 --------------------------------------------
+[114.5735.05] - 2023.09.06
+
+* E2EE improvements
+
 [114.5735.04] - 2023.08.25
 
 * Expose buffer on remote audio tracks
