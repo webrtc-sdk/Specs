@@ -1,6 +1,14 @@
 # Changelog
 
 --------------------------------------------
+[114.5735.06] - 2023.09.14
+
+* Upgrade to WebRTC-SDK M114.5735.06
+* Improve e2ee, add setSharedKey to KeyProvider.
+* Add scalabilityMode support for AV1/VP9.
+* add failure tolerance for framecryptor.
+* Fix camera rotation
+
 [114.5735.05] - 2023.09.06
 
 * E2EE improvements
