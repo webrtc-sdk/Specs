@@ -1,9 +1,16 @@
 # Changelog
 
 --------------------------------------------
+[114.5735.08] - 2023.09.21
+
+* Upgrade to WebRTC-SDK M114.5735.08
+* Use independent threads to process frame encryption/decryption
+* Correct handle SIF frame
+* Fix a fault tolerance judgment failure
+
 [114.5735.07] - 2023.09.20
 
-* Upgrade to WebRTC-SDK M114.5735.20
+* Upgrade to WebRTC-SDK M114.5735.07
 * fix h264 freeze on E2EE.
 * Send frame cryptor events from signaling-thread.
 
