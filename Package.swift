@@ -7,6 +7,7 @@ let package = Package(
     products: [
         .library(
             name: "WebRTC",
+            type: .static,
             targets: ["WebRTC"]),
     ],
     dependencies: [ ],
