@@ -13,8 +13,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "WebRTC",
-            url: "https://storage.unxpected.co.jp/public/static-webrtc/001/WebRTC.xcframework.zip",
-            checksum: "5df1b1c12fa5cb68096f80abad2712d4174bb270c13d90fd8c768a87ac90db1d"
+            url: "https://storage.unxpected.co.jp/public/static-webrtc/002/WebRTC.xcframework.zip",
+            checksum: "6a81743c9360e247d0e552109474687a35ac1aa4d8a1da5af8a5c26d2d714d59"
             // linkerSettings: [
             //   .unsafeFlags(["-ObjC"])
             // ]
