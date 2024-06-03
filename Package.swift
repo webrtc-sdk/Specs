@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "WebRTC",
-    platforms: [.iOS(.v12), .macOS(.v10_13)],
+    platforms: [.iOS(.v13), .macOS(.v10_13)],
     products: [
         .library(
             name: "WebRTC",
@@ -14,7 +14,7 @@ let package = Package(
         .binaryTarget(
             name: "WebRTC",
             url: "https://github.com/webrtc-sdk/Specs/releases/download/114.5735.09/WebRTC.xcframework.zip",
-            checksum: "23c98f013e90133ab3ea8dff14de7cc8e53e0ea293f3453e129a41ba05cc49a4"
+            checksum: "97f19f1b1490d21f729d86daffc07d6244cb790fffe155dd61140037246d6821"
         ),
     ]
 )
