@@ -1,11 +1,15 @@
 # Changelog
 
 --------------------------------------------
+[125.6422.01] - 2024.06.17
+
+* Upgrade to WebRTC-SDK M125.6422.01
+
 [114.5735.10] - 2024.05.01
 
 * Upgrade to WebRTC-SDK M114.5735.10
 * Added Privacy manifest files
-* Fixed naming for yuv helper 
+* Fixed naming for yuv helper
 
 [114.5735.09] - 2024.04.08
 
