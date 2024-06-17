@@ -1,6 +1,11 @@
 # Changelog
 
 --------------------------------------------
+[125.6422.02] - 2024.06.17
+
+* Upgrade to WebRTC-SDK M125.6422.02
+* Downgrade macOS system dependencies to 10.14.
+
 [125.6422.01] - 2024.06.17
 
 * Upgrade to WebRTC-SDK M125.6422.01

@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
     spec.name         = "WebRTC-SDK"
-    spec.version      = "125.6422.01"
+    spec.version      = "125.6422.02"
     spec.summary      = "WebRTC pre-compiled library for Darwin. "
     spec.description  = <<-DESC
     WebRTC pre-compiled library for Darwin.
@@ -12,10 +12,10 @@ Pod::Spec.new do |spec|
     spec.homepage     = "https://github.com/webrtc-sdk/Specs"
     spec.license      = { :type => 'BSD', :file => 'WebRTC.xcframework/LICENSE' }
     spec.author       = "webrtc-sdk"
-    spec.ios.deployment_target = '12.0'
-    spec.osx.deployment_target = '10.15'
+    spec.ios.deployment_target = '13.0'
+    spec.osx.deployment_target = '10.14'
   
-    spec.source       = { :http => "https://github.com/webrtc-sdk/Specs/releases/download/125.6422.01/WebRTC.xcframework.zip" }
+    spec.source       = { :http => "https://github.com/webrtc-sdk/Specs/releases/download/125.6422.02/WebRTC.xcframework.zip" }
     spec.vendored_frameworks = "WebRTC.xcframework"
     
   end
