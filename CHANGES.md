@@ -1,6 +1,12 @@
 # Changelog
 
 --------------------------------------------
+[125.6422.03] - 2024-07-09
+
+* Upgrade to WebRTC-SDK M125.6422.03
+* Fix Mac Catalyst RTCCameraVideoCapturer rotation (#126)
+* Fix set frame transformer (#125)
+
 [125.6422.02] - 2024.06.17
 
 * Upgrade to WebRTC-SDK M125.6422.02
