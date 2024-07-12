@@ -1,6 +1,11 @@
 # Changelog
 
 --------------------------------------------
+[125.6422.04] - 2024-07-12
+
+* Upgrade to WebRTC-SDK M125.6422.04
+* Fix webrtc_voice_engine not notifying mute change (#128)
+
 [125.6422.03] - 2024-07-09
 
 * Upgrade to WebRTC-SDK M125.6422.03
