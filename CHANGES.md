@@ -1,6 +1,11 @@
 # Changelog
 
 --------------------------------------------
+[125.6422.05] - 2024-09-23
+
+* Upgrade to WebRTC-SDK M125.6422.05
+* Fix bug for bypass voice processing (#147)
+
 [125.6422.04] - 2024-07-12
 
 * Upgrade to WebRTC-SDK M125.6422.04
