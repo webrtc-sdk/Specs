@@ -1,6 +1,13 @@
 # Changelog
 
 --------------------------------------------
+[125.6422.06] - 2024-11-11
+
+* Upgrade to WebRTC-SDK M125.6422.06
+* Fixed issue with missing network interfaces on iOS (#151)
+* Change audio renderer output format (#149)
+* remove aes cbc for framecryptor. (#145)
+
 [125.6422.05] - 2024-09-23
 
 * Upgrade to WebRTC-SDK M125.6422.05
