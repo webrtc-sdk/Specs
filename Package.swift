@@ -1,9 +1,14 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.9
 import PackageDescription
 
 let package = Package(
     name: "WebRTC",
-    platforms: [.iOS(.v13), .macOS(.v10_14)],
+    platforms: [
+        .iOS(.v13),
+        .tvOS(.v17),
+        .macOS(.v10_15),
+        .macCatalyst(.v14),
+    ],
     products: [
         .library(
             name: "WebRTC",
@@ -14,8 +19,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "WebRTC",
-            url: "https://github.com/webrtc-sdk/Specs/releases/download/125.6422.06/WebRTC.xcframework.zip",
-            checksum: "1dcb091c1d5dc4170b166b8e61eedd6dbd79e48912b7731f19e60ef54461c65d"
+            url: "https://github.com/webrtc-sdk/Specs/releases/download/125.6422.07/WebRTC.xcframework.zip",
+            checksum: "827cc2f508c341367c9b0e4f6def46e5f6834251082047d5d1da5bc8fd379263"
         ),
     ]
 )

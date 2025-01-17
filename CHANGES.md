@@ -1,6 +1,12 @@
 # Changelog
 
 --------------------------------------------
+[125.6422.07] - 2025-01-17
+
+* Upgrade to WebRTC-SDK M125.6422.07
+* Fix deadlock when creating a frame cryptor on iOS/macOS (#157)
+* tvOS/visionOS support for Swift Packaage.
+
 [125.6422.06] - 2024-11-11
 
 * Upgrade to WebRTC-SDK M125.6422.06
