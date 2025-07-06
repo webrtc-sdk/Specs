@@ -1,6 +1,10 @@
 # Changelog
 
 --------------------------------------------
+[125.6422.09] - 2025-07-07
+
+* Fix tvOS / visionOS issues with framework.
+
 [125.6422.08] - 2025-07-06
 
 * Added AVAudioEngine based AudioDeviceModule.
