@@ -5,9 +5,10 @@ let package = Package(
     name: "WebRTC",
     platforms: [
         .iOS(.v13),
-        .tvOS(.v17),
         .macOS(.v10_15),
         .macCatalyst(.v14),
+        .visionOS(.v1),
+        .tvOS(.v17),
     ],
     products: [
         .library(
