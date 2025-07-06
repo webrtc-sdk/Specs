@@ -1,6 +1,10 @@
 # Changelog
 
 --------------------------------------------
+[125.6422.08] - 2025-07-06
+
+* Added AVAudioEngine based AudioDeviceModule.
+
 [125.6422.07] - 2025-01-17
 
 * Upgrade to WebRTC-SDK M125.6422.07
