@@ -1,6 +1,10 @@
 # Changelog
 
 --------------------------------------------
+[137.7151.00] - 2025-07-08
+
+* Upgrade to WebRTC-SDK M137.7151.00
+
 [125.6422.09] - 2025-07-07
 
 * Fix tvOS / visionOS issues with framework.
