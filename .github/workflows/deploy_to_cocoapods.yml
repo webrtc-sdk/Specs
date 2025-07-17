@@ -19,7 +19,7 @@ jobs:
     - name: Deploy to Cocoapods
       run: |
         set -eo pipefail
-        pod spec lint --allow-warnings --skip-import-validation
+        pod spec lint --allow-warnings --skip-import-validation --platforms=iOS,macOS
         pod trunk push --allow-warnings --skip-import-validation
       env:
         COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
