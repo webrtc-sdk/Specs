@@ -8,7 +8,7 @@ let package = Package(
         .macOS(.v10_15),
         .macCatalyst(.v14),
         .tvOS(.v17),
-        .visionOS(.v1),
+        .visionOS(.v2),
     ],
     products: [
         .library(
@@ -20,8 +20,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "WebRTC",
-            url: "https://github.com/webrtc-sdk/Specs/releases/download/125.6422.09/WebRTC.xcframework.zip",
-            checksum: "0ee99bcfddcc2386e041aad6dbc657f05538f76f0f6a23231c6761116ca340da"
+            url: "https://github.com/webrtc-sdk/Specs/releases/download/137.7151.01/WebRTC.xcframework.zip",
+            checksum: "85a38dc35cbf71f60862fc184f19ebbf61e1c98b5463669ee8f4ddc2d6ac6a04"
         ),
     ]
 )
