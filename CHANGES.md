@@ -1,6 +1,11 @@
 # Changelog
 
 --------------------------------------------
+[137.7151.02] - 2025-07-15
+
+* Upgrade to WebRTC-SDK M137.7151.02
+* Fixed scalabilityModes is invalid on Apple platforms.
+
 [137.7151.01] - 2025-07-15
 
 * Added AVAudioEngine based AudioDeviceModule for M137.
