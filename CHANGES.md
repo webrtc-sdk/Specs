@@ -1,6 +1,11 @@
 # Changelog
 
 --------------------------------------------
+[137.7151.04] - 2025-09-09
+
+* Upgrade to WebRTC-SDK M137.7151.04
+* feat: Data packet cryptor.
+
 [137.7151.03] - 2025-08-20
 
 * Upgrade to WebRTC-SDK M137.7151.03
