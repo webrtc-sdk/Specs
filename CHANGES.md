@@ -1,6 +1,10 @@
 # Changelog
 
 --------------------------------------------
+[137.7151.09] - 2025-09-30
+
+* Audio engine related fixes.
+
 [137.7151.03] - 2025-08-20
 
 * Upgrade to WebRTC-SDK M137.7151.03
@@ -306,7 +310,7 @@ or `AVAudioSessionCategoryRecord`.
 
 iOS(arm64,x64) macOS(x64, arm64).
 
-* Applied H264 related patch 
+* Applied H264 related patch
 
 --------------------------------------------
 [92.4515.03] - 2021.09.22
