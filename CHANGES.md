@@ -1,6 +1,10 @@
 # Changelog
 
 --------------------------------------------
+[137.7151.11] - 2025-12-01
+
+* Audio engine related fixes.
+
 [137.7151.09] - 2025-09-30
 
 * Audio engine related fixes.
