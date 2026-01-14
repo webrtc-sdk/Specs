@@ -1,6 +1,11 @@
 # Changelog
 
 --------------------------------------------
+[137.7151.12] - 2026-01-13
+
+* Audio ducking changes
+* Field trial patch
+
 [137.7151.11] - 2025-12-01
 
 * Audio engine related fixes.
