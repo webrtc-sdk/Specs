@@ -1,6 +1,23 @@
 # Changelog
 
 --------------------------------------------
+[144.7559.04] - 2026-04-20
+
+* Upgrade to WebRTC-SDK M144.7559.04
+
+[144.7559.01] - 2026-03-16
+
+* Upgrade to WebRTC-SDK M144.7559.01
+
+[137.7151.12] - 2026-01-13
+
+* Audio ducking changes
+* Field trial patch
+
+[137.7151.11] - 2025-12-01
+
+* Audio engine related fixes.
+
 [137.7151.09] - 2025-09-30
 
 * Audio engine related fixes.
