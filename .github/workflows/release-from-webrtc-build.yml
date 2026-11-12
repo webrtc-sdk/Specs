@@ -1,0 +1,297 @@
+# Fetches WebRTC.xcframework.zip produced by the `build-apple` (matrix: apple) job
+# of a webrtc-sdk/webrtc-build workflow run, computes its SwiftPM checksum, and
+# opens a release PR that bumps the version in README.md, Package.swift,
+# WebRTC.json, WebRTC-SDK.podspec (and CHANGES.md).
+#
+# It also creates a *draft* GitHub release with the xcframework zip attached.
+# A draft release does not create the git tag, so deploy_to_cocoapods.yml is
+# not triggered until the draft is published.
+#
+# Release steps:
+#   1. Run this workflow (Actions -> "Release from webrtc-build" -> Run workflow).
+#   2. Review and merge the generated PR.
+#   3. Publish the draft release (this creates the tag and pushes to CocoaPods trunk).
+#
+# Secrets:
+#   WEBRTC_ARTIFACT_FETCH_TOKEN (optional): PAT with actions:read on the source repo.
+#   Falls back to GITHUB_TOKEN when not set.
+name: Release from webrtc-build
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'Workflow run ID from webrtc-sdk/webrtc-build (from the Actions run URL)'
+        required: true
+        type: string
+      version:
+        description: 'New release version, without "v" (e.g. 150.7871.05)'
+        required: true
+        type: string
+      repo:
+        description: 'Source repo (owner/repo) that produced the artifacts'
+        required: false
+        default: 'webrtc-sdk/webrtc-build'
+        type: string
+      artifact_name:
+        description: 'Artifact name uploaded by build-apple (matrix: apple)'
+        required: false
+        default: 'WebRTC.xcframework.zip'
+        type: string
+
+concurrency:
+  group: release-${{ inputs.version }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      VERSION: ${{ inputs.version }}
+      BRANCH: release/v${{ inputs.version }}
+      ZIP_NAME: WebRTC.xcframework.zip
+      FRAMEWORK_DIR: WebRTC.xcframework
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Validate inputs
+        id: meta
+        run: |
+          set -euo pipefail
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Invalid version '$VERSION', expected e.g. 150.7871.05"
+            exit 1
+          fi
+
+          OLD_VERSION=$(sed -nE 's/^[[:space:]]*spec\.version[[:space:]]*=[[:space:]]*"([^"]+)".*/\1/p' WebRTC-SDK.podspec)
+          if [[ -z "$OLD_VERSION" ]]; then
+            echo "::error::Could not read current version from WebRTC-SDK.podspec"
+            exit 1
+          fi
+          if [[ "$OLD_VERSION" == "$VERSION" ]]; then
+            echo "::error::Version $VERSION is already the current version"
+            exit 1
+          fi
+          if git ls-remote --exit-code --tags origin "refs/tags/$VERSION" >/dev/null; then
+            echo "::error::Tag $VERSION already exists"
+            exit 1
+          fi
+          if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null; then
+            echo "::error::Branch $BRANCH already exists"
+            exit 1
+          fi
+          if gh release view "$VERSION" >/dev/null 2>&1; then
+            echo "::error::Release $VERSION already exists"
+            exit 1
+          fi
+
+          echo "Current version: $OLD_VERSION -> new version: $VERSION"
+          echo "old_version=$OLD_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v17
+        with:
+          run_id: ${{ inputs.run_id }}
+          repo: ${{ inputs.repo }}
+          name: ${{ inputs.artifact_name }}
+          path: ./artifacts/raw
+          github_token: ${{ secrets.WEBRTC_ARTIFACT_FETCH_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Check zip layers
+        run: |
+          set -euo pipefail
+          RAW_DIR=./artifacts/raw
+          WORK_DIR=./artifacts/work
+          OUT_DIR=./artifacts/out
+          mkdir -p "$WORK_DIR" "$OUT_DIR"
+
+          echo "Downloaded files:"
+          find "$RAW_DIR" -maxdepth 3 | head -50
+
+          ZIP=$(find "$RAW_DIR" -type f -name '*.zip' | head -1)
+          if [[ -z "$ZIP" ]]; then
+            echo "::error::No zip file found in artifact '${{ inputs.artifact_name }}'"
+            exit 1
+          fi
+
+          # Unwrap nested zips (e.g. WebRTC.xcframework.zip containing only
+          # another WebRTC.xcframework.zip) until we reach the single-layer zip
+          # whose top-level entry is WebRTC.xcframework/.
+          LAYERS=1
+          MAX_LAYERS=5
+          while true; do
+            ENTRIES=$(zipinfo -1 "$ZIP")
+            TOP_LEVEL=$(echo "$ENTRIES" | sed -E 's#/.*##' | sort -u)
+            echo "Layer $LAYERS ($ZIP) top-level entries:"
+            echo "$TOP_LEVEL" | sed 's/^/  /'
+
+            if [[ "$TOP_LEVEL" == "$FRAMEWORK_DIR" ]]; then
+              break
+            fi
+
+            ENTRY_COUNT=$(echo "$ENTRIES" | grep -c .)
+            if [[ "$ENTRY_COUNT" -eq 1 && "$ENTRIES" == *.zip ]]; then
+              if (( LAYERS >= MAX_LAYERS )); then
+                echo "::error::More than $MAX_LAYERS nested zip layers"
+                exit 1
+              fi
+              LAYER_DIR="$WORK_DIR/layer$LAYERS"
+              mkdir -p "$LAYER_DIR"
+              unzip -q "$ZIP" -d "$LAYER_DIR"
+              ZIP="$LAYER_DIR/$ENTRIES"
+              LAYERS=$((LAYERS + 1))
+              continue
+            fi
+
+            echo "::error::Unexpected zip layout: expected top-level '$FRAMEWORK_DIR/' or a single nested zip"
+            exit 1
+          done
+
+          if [[ "$LAYERS" -gt 1 ]]; then
+            echo "::warning::Artifact had $LAYERS zip layers; using the innermost single-layer zip"
+          else
+            echo "Artifact is a single-layer zip"
+          fi
+
+          if ! zipinfo -1 "$ZIP" | grep -qx "$FRAMEWORK_DIR/Info.plist"; then
+            echo "::error::$FRAMEWORK_DIR/Info.plist not found in zip"
+            exit 1
+          fi
+
+          cp "$ZIP" "$OUT_DIR/$ZIP_NAME"
+
+      - name: Compute checksum
+        id: checksum
+        working-directory: ./artifacts/out
+        run: |
+          set -euo pipefail
+          # Same value as `swift package compute-checksum` (SHA-256 of the zip).
+          CHECKSUM=$(sha256sum "$ZIP_NAME" | awk '{print $1}')
+          if [[ ! "$CHECKSUM" =~ ^[0-9a-f]{64}$ ]]; then
+            echo "::error::Invalid checksum '$CHECKSUM'"
+            exit 1
+          fi
+          echo "$CHECKSUM  $ZIP_NAME" > "$ZIP_NAME.shasum"
+          cat "$ZIP_NAME.shasum"
+          echo "checksum=$CHECKSUM" >> "$GITHUB_OUTPUT"
+
+      - name: Update version and checksum
+        env:
+          OLD_VERSION: ${{ steps.meta.outputs.old_version }}
+          CHECKSUM: ${{ steps.checksum.outputs.checksum }}
+        run: |
+          set -euo pipefail
+          OLD_RE=$(printf '%s' "$OLD_VERSION" | sed 's/\./\\./g')
+          URL="https://github.com/webrtc-sdk/Specs/releases/download/$VERSION/$ZIP_NAME"
+
+          # README.md: pod 'WebRTC-SDK', '=x.y.z'
+          sed -i -E "s/(pod 'WebRTC-SDK', '=)[^']+'/\1$VERSION'/" README.md
+
+          # WebRTC-SDK.podspec: version and source url
+          sed -i -E \
+            -e "s/^([[:space:]]*spec\.version[[:space:]]*=[[:space:]]*\")[^\"]+\"/\1$VERSION\"/" \
+            -e "s#releases/download/[^/]+/$ZIP_NAME#releases/download/$VERSION/$ZIP_NAME#" \
+            WebRTC-SDK.podspec
+
+          # Package.swift: url and checksum
+          sed -i -E \
+            -e "s#releases/download/[^/]+/$ZIP_NAME#releases/download/$VERSION/$ZIP_NAME#" \
+            -e "s/(checksum:[[:space:]]*\")[0-9a-f]+\"/\1$CHECKSUM\"/" \
+            Package.swift
+
+          # WebRTC.json: single entry { "<version>": "<url>" }
+          printf '{\n    "%s": "%s"\n}' "$VERSION" "$URL" > WebRTC.json
+
+          # CHANGES.md: prepend a new entry after the separator line
+          DATE=$(date -u +%Y-%m-%d)
+          ENTRY="[$VERSION] - $DATE\n\n* Upgrade to WebRTC-SDK M$VERSION\n"
+          awk -v entry="$ENTRY" '
+            !done && /^-+$/ { print; gsub(/\\n/, "\n", entry); print entry; done=1; next }
+            { print }
+          ' CHANGES.md > CHANGES.md.tmp && mv CHANGES.md.tmp CHANGES.md
+
+          # Sanity checks
+          grep -q "'=$VERSION'" README.md
+          grep -q "spec.version = \"$VERSION\"" WebRTC-SDK.podspec
+          grep -q "releases/download/$VERSION/$ZIP_NAME" WebRTC-SDK.podspec
+          grep -q "releases/download/$VERSION/$ZIP_NAME" Package.swift
+          grep -q "checksum: \"$CHECKSUM\"" Package.swift
+          grep -q "\"$VERSION\"" WebRTC.json
+          if grep -nE "$OLD_RE" README.md Package.swift WebRTC.json WebRTC-SDK.podspec; then
+            echo "::error::Old version $OLD_VERSION is still referenced"
+            exit 1
+          fi
+
+          git --no-pager diff
+
+      - name: Create release PR
+        id: pr
+        env:
+          OLD_VERSION: ${{ steps.meta.outputs.old_version }}
+          CHECKSUM: ${{ steps.checksum.outputs.checksum }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b "$BRANCH"
+          git add README.md Package.swift WebRTC.json WebRTC-SDK.podspec CHANGES.md
+          git commit -m "release: v$VERSION."
+          git push origin "$BRANCH"
+
+          BODY=$(cat <<EOF
+          ## What's Changed
+          * Upgrade to WebRTC-SDK M$VERSION
+
+          ## Details
+          - Version: \`$OLD_VERSION\` -> \`$VERSION\`
+          - Source: https://github.com/${{ inputs.repo }}/actions/runs/${{ inputs.run_id }}
+          - Checksum: \`$CHECKSUM\`
+
+          ## Release steps
+          1. Merge this PR.
+          2. Publish the draft release [$VERSION](https://github.com/${{ github.repository }}/releases) (creates tag \`$VERSION\` and triggers the CocoaPods deploy).
+          EOF
+          )
+
+          PR_URL=$(gh pr create \
+            --base "${{ github.event.repository.default_branch }}" \
+            --head "$BRANCH" \
+            --title "release: v$VERSION." \
+            --body "$BODY")
+          echo "pr_url=$PR_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Create draft release
+        id: release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.version }}
+          name: ${{ inputs.version }}
+          target_commitish: release/v${{ inputs.version }}
+          draft: true
+          body: |
+            ## What's Changed
+            * Upgrade to WebRTC-SDK M${{ inputs.version }}
+
+            **Full Changelog**: https://github.com/${{ github.repository }}/compare/${{ steps.meta.outputs.old_version }}...${{ inputs.version }}
+          files: |
+            artifacts/out/WebRTC.xcframework.zip
+            artifacts/out/WebRTC.xcframework.zip.shasum
+
+      - name: Summary
+        run: |
+          {
+            echo "### Release $VERSION"
+            echo ""
+            echo "- PR: ${{ steps.pr.outputs.pr_url }}"
+            echo "- Draft release: ${{ steps.release.outputs.url }}"
+            echo "- Checksum: \`${{ steps.checksum.outputs.checksum }}\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "::notice title=Release PR ready::${{ steps.pr.outputs.pr_url }}"
