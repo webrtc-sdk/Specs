@@ -1,6 +1,16 @@
 # Changelog
 
 --------------------------------------------
+[150.7871.06] - 2026-11-12
+
+* Upgrade to WebRTC-SDK M150.7871.06
+* Drop encrypted frames that are too short to decrypt (webrtc-sdk/webrtc#324)
+* Keep the H.264 PPS id readable in E2EE keyframes without a wire change (webrtc-sdk/webrtc#327)
+* Copy `discard_frame_when_cryptor_not_ready` in `KeyProviderOptions` (webrtc-sdk/webrtc#328)
+* Fire `OnTrack` when a receiving transceiver gains a remote stream (webrtc-sdk/webrtc#321)
+* Add `RtpParameters::fec_protection` to control FEC per sender at runtime (webrtc-sdk/webrtc#329)
+* Clamp the `RTCMTLVideoView` drawable to the pixels the view displays (webrtc-sdk/webrtc#325, from 150.7871.05)
+
 [150.7871.04] - 2026-10-23
 
 * Upgrade to WebRTC-SDK M150.7871.04
