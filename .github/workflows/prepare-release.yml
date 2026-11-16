@@ -1,0 +1,60 @@
+name: prepare-release
+
+# Opens release/<version> when webrtc-build publishes a release
+# (repository_dispatch `webrtc-release`), or by hand. The PR bumps the podspec,
+# Package.swift (with the checksum of webrtc-build's WebRTC.xcframework.zip),
+# WebRTC.json, README.md and CHANGES.md. Merging it runs release.yml.
+
+on:
+  repository_dispatch:
+    types: [webrtc-release]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version, e.g. 150.7871.08 (webrtc-build release m<version> must exist)'
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  SOURCE_REPO: ${{ github.event.client_payload.source_repo || vars.SOURCE_REPO || 'webrtc-sdk/webrtc-build' }}
+  VERSION: ${{ github.event.client_payload.version || inputs.version }}
+
+jobs:
+  open:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5
+    - name: Bump version
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        set -euo pipefail
+        TAG="m$VERSION"
+        gh release download "$TAG" -R "$SOURCE_REPO" -p WebRTC.xcframework.zip.shasum -D "$RUNNER_TEMP"
+        CHECKSUM=$(awk '$2 == "WebRTC.xcframework.zip" {print $1}' "$RUNNER_TEMP/WebRTC.xcframework.zip.shasum")
+        [ -n "$CHECKSUM" ] || { echo "::error::no checksum in $SOURCE_REPO $TAG WebRTC.xcframework.zip.shasum"; exit 1; }
+        python3 .github/scripts/prepare_release.py --version "$VERSION" --checksum "$CHECKSUM" --repo "$GITHUB_REPOSITORY"
+        {
+          echo "Release WebRTC-SDK $VERSION."
+          echo
+          echo "Binary: [$SOURCE_REPO $TAG](https://github.com/$SOURCE_REPO/releases/tag/$TAG), \`WebRTC.xcframework.zip\` sha256 \`$CHECKSUM\`."
+          echo
+          echo "Merging publishes the GitHub release and pushes the podspec to CocoaPods trunk."
+          echo
+          echo '<details><summary>webrtc changes</summary>'
+          echo
+          gh release view "$TAG" -R "$SOURCE_REPO" --json body --jq .body
+          echo
+          echo '</details>'
+        } > "$RUNNER_TEMP/body.md"
+    - uses: peter-evans/create-pull-request@v7
+      with:
+        token: ${{ secrets.RELEASE_TOKEN || github.token }}
+        branch: release/${{ env.VERSION }}
+        commit-message: 'release: ${{ env.VERSION }}'
+        title: 'release: ${{ env.VERSION }}'
+        body-path: ${{ runner.temp }}/body.md
+        labels: release
