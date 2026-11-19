@@ -35,8 +35,11 @@ def main():
     p.add_argument('--date', default=datetime.date.today().isoformat())
     args = p.parse_args()
 
-    if not re.fullmatch(r'\d+\.\d+\.\d+', args.version):
-        raise SystemExit(f'invalid version {args.version!r}')
+    # Two-digit patch (150.7871.08, not 150.7871.8): SwiftPM treats both
+    # spellings as the same version, so only one may ever be tagged.
+    if not re.fullmatch(r'\d+\.\d+\.(\d{2}|[1-9]\d{2,})', args.version):
+        raise SystemExit(f'invalid version {args.version!r}: expected <milestone>.<branch>.<patch> '
+                         'with a two-digit patch, e.g. 150.7871.08')
     if not re.fullmatch(r'[0-9a-f]{64}', args.checksum):
         raise SystemExit('checksum must be a sha256 hex digest')
     v = args.version
